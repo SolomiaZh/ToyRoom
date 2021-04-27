@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="10">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <RollingFile name="RollingFile" fileName="logs/app.log"
+                     filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="10 KB"/>
+            </Policies>
+        </RollingFile>
+        <SMTP name="Mail"
+              subject="Error Log"
+              to="solomiiiyka@gmail.com"
+              from="solomiiiyka@gmail.com"
+              smtpHost="smtp.gmail.com"
+              smtpPort="465"
+              smtpUsername="solomiiiyka@gmail.com"
+              smtpPassword="solomia2002"
+              smtpProtocol="smtps"
+              bufferSize="1"
+        />
+        <SMS name="SMSsender">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </SMS>
+    </Appenders>
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="Mail" level="ERROR"/>
+            <!--            <AppenderRef ref="SMSsender" level="ERROR"/>-->
+        </Root>
+    </Loggers>
+</Configuration>
